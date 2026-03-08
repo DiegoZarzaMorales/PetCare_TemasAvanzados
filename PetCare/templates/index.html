@@ -120,10 +120,10 @@
       <div>
         <div class="stat-label">Pacientes</div>
         <div class="stat-value">
-          <img src="{% static 'img/icons/PacienteAnimal.png' %}" alt="" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">
-          Mascotas
+          <img src="{% static 'img/icons/PacienteAnimal.png' %}" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
+          {{ total_mascotas|default:"--" }}
         </div>
-        <div class="stat-sub">Ver todos los pacientes</div>
+        <div class="stat-sub">Total de mascotas registradas</div>
       </div>
       <div class="stat-icon teal"><i class="fa-solid fa-paw"></i></div>
     </div>
@@ -131,12 +131,12 @@
   <a href="{% url 'cita_calendario' %}" class="stat-card">
     <div class="stat-header">
       <div>
-        <div class="stat-label">Agenda</div>
+        <div class="stat-label">Citas Hoy</div>
         <div class="stat-value">
-          <img src="{% static 'img/icons/Calendario.png' %}" alt="" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">
-          Citas
+          <img src="{% static 'img/icons/Calendario.png' %}" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
+          {{ citas_hoy|default:"--" }}
         </div>
-        <div class="stat-sub">Calendario de citas</div>
+        <div class="stat-sub">Citas programadas para hoy</div>
       </div>
       <div class="stat-icon green"><i class="fa-solid fa-calendar-check"></i></div>
     </div>
@@ -144,12 +144,12 @@
   <a href="{% url 'inventario_list' %}" class="stat-card">
     <div class="stat-header">
       <div>
-        <div class="stat-label">Almacén</div>
+        <div class="stat-label">Inventario</div>
         <div class="stat-value">
-          <img src="{% static 'img/icons/Inventario.png' %}" alt="" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">
-          Inventario
+          <img src="{% static 'img/icons/Inventario.png' %}" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
+          {{ total_productos|default:"--" }}
         </div>
-        <div class="stat-sub">Gestión de stock</div>
+        <div class="stat-sub">Productos en stock</div>
       </div>
       <div class="stat-icon blue"><i class="fa-solid fa-boxes-stacked"></i></div>
     </div>
@@ -157,12 +157,12 @@
   <a href="{% url 'factura_list' %}" class="stat-card">
     <div class="stat-header">
       <div>
-        <div class="stat-label">Ventas</div>
+        <div class="stat-label">Facturas</div>
         <div class="stat-value">
-          <img src="{% static 'img/icons/Facturas.png' %}" alt="" style="width:32px;height:32px;vertical-align:middle;margin-right:6px;">
-          Facturas
+          <img src="{% static 'img/icons/Facturas.png' %}" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
+          {{ total_facturas|default:"--" }}
         </div>
-        <div class="stat-sub">Facturación y pagos</div>
+        <div class="stat-sub">Total de facturas emitidas</div>
       </div>
       <div class="stat-icon orange"><i class="fa-solid fa-file-invoice"></i></div>
     </div>
