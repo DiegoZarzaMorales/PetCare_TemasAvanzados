@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gestionar Usuarios | PetCare{% endblock %}
+
+{% block content %}
+<style>
+  .user-admin-card { background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+  .user-admin-card h2 { color: #333; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .user-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+  .user-table th { background: linear-gradient(135deg, #008080, #00a3a3); color: white; padding: 12px 15px; text-align: left; }
+  .user-table td { padding: 12px 15px; border-bottom: 1px solid #f0f0f0; }
+  .user-table tbody tr:hover { background: #f0fafa; }
+  .badge-admin { background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; padding: 3px 10px; border-radius: 12px; font-size: .78rem; font-weight: bold; }
+  .badge-staff { background: linear-gradient(135deg, #4ecdc4, #88d3ce); color: white; padding: 3px 10px; border-radius: 12px; font-size: .78rem; font-weight: bold; }
+  .badge-user { background: linear-gradient(135deg, #95e1d3, #b5e8dd); color: #333; padding: 3px 10px; border-radius: 12px; font-size: .78rem; font-weight: bold; }
+  .badge-active { background: #28a745; color: white; padding: 3px 10px; border-radius: 12px; font-size: .78rem; }
+  .badge-inactive { background: #dc3545; color: white; padding: 3px 10px; border-radius: 12px; font-size: .78rem; }
+  .action-btn { padding: 6px 14px; border-radius: 20px; border: none; cursor: pointer; font-size: .8rem; font-weight: bold; text-decoration: none; display: inline-flex; align-items: center; gap: 5px; transition: all .3s; }
+  .btn-edit { background: #ffc107; color: #212529; }
+  .btn-edit:hover { background: #e0a800; transform: translateY(-2px); }
+</style>
+
+<div class="user-admin-card">
+  <h2>
+    <i class="fa-solid fa-users-gear" style="color:#008080;"></i>
+    Gestionar Usuarios del Sistema
+  </h2>
+  <p style="color:#666;margin-bottom:20px;">Administra todos los usuarios registrados en el sistema.</p>
+
+  {% if users %}
+  <div style="overflow-x:auto;">
+    <table class="user-table">
+      <thead>
+        <tr>
+          <th><i class="fa-solid fa-user"></i> Usuario</th>
+          <th><i class="fa-solid fa-envelope"></i> Email</th>
+          <th><i class="fa-solid fa-id-badge"></i> Nombre</th>
+          <th><i class="fa-solid fa-shield"></i> Rol</th>
+          <th><i class="fa-solid fa-circle-check"></i> Estado</th>
+          <th><i class="fa-solid fa-calendar"></i> Último Ingreso</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for u in users %}
+        <tr>
+          <td><strong>{{ u.username }}</strong></td>
+          <td>{{ u.email|default:"—" }}</td>
+          <td>{{ u.get_full_name|default:"—" }}</td>
+          <td>
+            {% if u.is_superuser %}
+              <span class="badge-admin">Administrador</span>
+            {% elif u.is_staff %}
+              <span class="badge-staff">Staff</span>
+            {% else %}
+              <span class="badge-user">Usuario</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if u.is_active %}
+              <span class="badge-active">Activo</span>
+            {% else %}
+              <span class="badge-inactive">Inactivo</span>
+            {% endif %}
+          </td>
+          <td>{{ u.last_login|date:"d/m/Y H:i"|default:"Nunca" }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div style="text-align:center;padding:40px;color:#888;">
+    <i class="fa-solid fa-users" style="font-size:3rem;margin-bottom:15px;display:block;color:#ccc;"></i>
+    No hay usuarios registrados todavía.
+  </div>
+  {% endif %}
+
+  <div style="margin-top:20px;display:flex;gap:10px;flex-wrap:wrap;">
+    <a href="{% url 'registrar_admin' %}" class="action-btn btn-edit">
+      <i class="fa-solid fa-user-plus"></i> Crear Administrador
+    </a>
+    <a href="{% url 'index' %}" class="action-btn" style="background:#6c757d;color:white;">
+      <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+    </a>
+  </div>
+</div>
+{% endblock %}

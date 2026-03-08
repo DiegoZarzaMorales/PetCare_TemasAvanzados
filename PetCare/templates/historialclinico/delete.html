@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Historial Clínico - PetCare{% endblock %}
+
+{% block content %}
+<h2>Eliminar Historial Clínico</h2>
+
+<p>¿Está seguro que desea eliminar este historial clínico (ID: <strong>{{ historial.id_historial }}</strong>)?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger"> Sí, Eliminar</button>
+    <a href="{% url 'historialclinico_list' %}" class="btn btn-secondary"> Cancelar</a>
+</form>
+{% endblock %}

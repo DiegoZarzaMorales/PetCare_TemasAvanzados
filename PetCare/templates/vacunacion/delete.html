@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Vacunación - PetCare{% endblock %}
+
+{% block content %}
+<h2>Eliminar Vacunación</h2>
+
+<p>¿Está seguro que desea eliminar esta vacunación (ID: <strong>{{ vacunacion.id_vacunacion }}</strong>)?</p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger"> Sí, Eliminar</button>
+    <a href="{% url 'vacunacion_list' %}" class="btn btn-secondary"> Cancelar</a>
+</form>
+{% endblock %}
