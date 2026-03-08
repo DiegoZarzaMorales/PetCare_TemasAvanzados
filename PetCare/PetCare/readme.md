@@ -9,7 +9,7 @@ CREATE USER "petcare-administrator" WITH PASSWORD 'root123';
 ALTER USER "petcare-administrator" WITH SUPERUSER;
 ```
          
-## Crear la base de datos con el codigo "Estrucutra.sql" en esta carpeta
+## Crear la base de datos con el código "Estructura.sql" en esta carpeta
 ```bash
 psql -U petcare-administrator -h localhost -f PostgreDB/Estructura.sql
 ```
