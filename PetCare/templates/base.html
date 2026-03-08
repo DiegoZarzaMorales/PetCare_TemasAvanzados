@@ -22,13 +22,13 @@
             display: inline-block;
         }
         
-        .navbar h1 .icon-img {
+        .header-left h1 .icon-img {
             width: 40px;
             height: 40px;
             margin-right: 12px;
         }
         
-        .nav-actions .icon-img {
+        .header-right .icon-img {
             width: 18px;
             height: 18px;
             margin-right: 5px;
@@ -87,19 +87,27 @@
     <!-- Overlay oscuro cuando el sidebar está abierto -->
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
     
-    <!-- Barra de navegación superior -->
-    <div class="navbar">
-    <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle Menu">☰</button>
-        <h1><img src="{% static 'img/icons/Patitas-removebg.png' %}" alt="" class="icon-img"> PetCare - Sistema de Gestión Veterinaria</h1>
-        <div class="nav-actions">
-                {% if user.is_authenticated %}
-                <span style="color:#ecf0f1; margin-right: .5rem;">Hola, <strong>{{ user.username }}</strong></span>
-                <a href="{% url 'password_change' %}">Cambiar contraseña</a>
-                <form method="post" action="{% url 'logout' %}" style="display:inline;">
-                     {% csrf_token %}
-                     <button type="submit" style="background:#dc3545;">Salir</button>
-                </form>
-                {% else %}
+    <!-- Barra de navegación superior — Header 3 zonas (PetCareAlex) -->
+    <div class="header">
+        <!-- Zona izquierda: toggle + logo + título -->
+        <div class="header-left">
+            <button class="menu-toggle" onclick="toggleSidebar()" aria-label="Toggle Menu">☰</button>
+            <h1><img src="{% static 'img/icons/Patitas-removebg.png' %}" alt="" class="icon-img"> PetCare - Sistema de Gestión Veterinaria</h1>
+        </div>
+        <!-- Zona central: fecha/hora -->
+        <div class="header-center">
+            <div class="info" id="headerDateTime"></div>
+        </div>
+        <!-- Zona derecha: usuario + acciones -->
+        <div class="header-right">
+            {% if user.is_authenticated %}
+            <span>Hola, <strong>{{ user.username }}</strong></span>
+            <a href="{% url 'password_change' %}">Cambiar contraseña</a>
+            <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                 {% csrf_token %}
+                 <button type="submit" class="btn-salir">Salir</button>
+            </form>
+            {% else %}
             <a href="{% url 'login' %}">Iniciar sesión</a>
             {% endif %}
             <a href="{% url 'carrito_ver' %}"><img src="{% static 'img/icons/Carrito.png' %}" alt="Carrito" class="icon-img"> Carrito
@@ -226,6 +234,18 @@
     </div>
 
     <script>
+        // Fecha/hora en el header central
+        function updateHeaderDateTime() {
+            const el = document.getElementById('headerDateTime');
+            if (el) {
+                const now = new Date();
+                const opts = { weekday:'long', year:'numeric', month:'long', day:'numeric', hour:'2-digit', minute:'2-digit' };
+                el.textContent = now.toLocaleDateString('es-MX', opts);
+            }
+        }
+        updateHeaderDateTime();
+        setInterval(updateHeaderDateTime, 60000);
+
         // Función para abrir/cerrar el sidebar
         function toggleSidebar() {
             const overlay = document.getElementById('sidebarOverlay');

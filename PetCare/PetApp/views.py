@@ -31,7 +31,15 @@ from django.db.models import Q
 # Vista principal
 @login_required
 def index(request):
-    return render(request, 'index.html')
+    from django.utils.timezone import now
+    hoy = now().date()
+    context = {
+        'total_mascotas': Pacientes.objects.count(),
+        'citas_hoy': Cita.objects.filter(fecha=hoy).count(),
+        'total_productos': Inventario.objects.count(),
+        'total_facturas': Factura.objects.count(),
+    }
+    return render(request, 'index.html', context)
 
 # ==================== CRUD PROPIETARIO ====================
 def propietario_list(request):
