@@ -286,6 +286,20 @@
                 }
             }
         });
+
+        // Marcar el enlace activo en el sidebar según la URL actual
+        (function markActiveSidebarLink() {
+            const currentPath = window.location.pathname;
+            document.querySelectorAll('.sidebar-menu a').forEach(link => {
+                try {
+                    const linkPath = new URL(link.href, window.location.origin).pathname;
+                    const isActive = linkPath === '/'
+                        ? currentPath === '/'
+                        : currentPath === linkPath || currentPath.startsWith(linkPath + '/');
+                    if (isActive) link.classList.add('active');
+                } catch(e) {}
+            });
+        })();
     </script>
     <!-- Bootstrap Bundle JS (incluye Popper) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

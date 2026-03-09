@@ -106,7 +106,7 @@
 <!-- Sección de bienvenida -->
 <div class="welcome-section">
   <h2>
-    <i class="fa-solid fa-paw"></i>
+    <i class="fa-solid fa-hand-sparkles"></i>
     ¡Bienvenido, {{ user.username }}!
   </h2>
   <p>Sistema de Gestión Veterinaria PetCare</p>
@@ -141,32 +141,62 @@
       <div class="stat-icon green"><i class="fa-solid fa-calendar-check"></i></div>
     </div>
   </a>
-  <a href="{% url 'inventario_list' %}" class="stat-card">
+  <a href="{% url 'propietario_list' %}" class="stat-card">
     <div class="stat-header">
       <div>
-        <div class="stat-label">Inventario</div>
+        <div class="stat-label">Propietarios</div>
         <div class="stat-value">
-          <img src="{% static 'img/icons/Inventario.png' %}" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
-          {{ total_productos|default:"--" }}
+          <img src="{% static 'img/icons/Propietario.png' %}" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
+          {{ total_propietarios|default:"--" }}
         </div>
-        <div class="stat-sub">Productos en stock</div>
+        <div class="stat-sub">Clientes registrados</div>
       </div>
-      <div class="stat-icon blue"><i class="fa-solid fa-boxes-stacked"></i></div>
+      <div class="stat-icon" style="background:linear-gradient(135deg,#ffc107,#ffcd39);"><i class="fa-solid fa-users"></i></div>
     </div>
   </a>
-  <a href="{% url 'factura_list' %}" class="stat-card">
+  <a href="{% url 'datosconsulta_list' %}" class="stat-card">
     <div class="stat-header">
       <div>
-        <div class="stat-label">Facturas</div>
+        <div class="stat-label">Consultas</div>
         <div class="stat-value">
-          <img src="{% static 'img/icons/Facturas.png' %}" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
-          {{ total_facturas|default:"--" }}
+          <img src="{% static 'img/icons/Consultas.png' %}" alt="" style="width:28px;height:28px;vertical-align:middle;margin-right:6px;">
+          {{ total_consultas|default:"--" }}
         </div>
-        <div class="stat-sub">Total de facturas emitidas</div>
+        <div class="stat-sub">Consultas registradas</div>
       </div>
-      <div class="stat-icon orange"><i class="fa-solid fa-file-invoice"></i></div>
+      <div class="stat-icon" style="background:linear-gradient(135deg,#dc3545,#e85d75);"><i class="fa-solid fa-stethoscope"></i></div>
     </div>
   </a>
+</div>
+
+<!-- Próximas citas y acceso rápido -->
+<div class="info-grid">
+  <div class="info-card">
+    <h3><i class="fa-solid fa-calendar-alt" style="color:#008080;"></i> Próximas Citas</h3>
+    <ul class="info-list">
+      {% for cita in proximas_citas %}
+      <li class="info-item">
+        <strong>{{ cita.paciente.nombre }}</strong> — {{ cita.fecha|date:"d/m/Y" }} {{ cita.hora|time:"H:i" }}
+        <span class="badge badge-{{ cita.estado|lower }}" style="margin-left:8px;">{{ cita.get_estado_display }}</span>
+      </li>
+      {% empty %}
+      <li class="info-item" style="color:#999;"><i class="fa-solid fa-check-circle" style="color:#008080;margin-right:6px;"></i>No hay citas próximas.</li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div class="info-card">
+    <h3><i class="fa-solid fa-th-large" style="color:#008080;"></i> Acceso Rápido</h3>
+    <ul class="info-list">
+      <li class="info-item"><a href="{% url 'propietario_list' %}" class="quick-link"><img src="{% static 'img/icons/Propietario.png' %}" alt=""> Propietarios</a></li>
+      <li class="info-item"><a href="{% url 'pacientes_list' %}" class="quick-link"><img src="{% static 'img/icons/PacienteAnimal.png' %}" alt=""> Pacientes / Mascotas</a></li>
+      <li class="info-item"><a href="{% url 'cita_calendario' %}" class="quick-link"><img src="{% static 'img/icons/Calendario.png' %}" alt=""> Calendario de Citas</a></li>
+      <li class="info-item"><a href="{% url 'datosconsulta_list' %}" class="quick-link"><img src="{% static 'img/icons/Consultas.png' %}" alt=""> Consultas</a></li>
+      <li class="info-item"><a href="{% url 'historialclinico_list' %}" class="quick-link"><img src="{% static 'img/icons/HistorialMedico.png' %}" alt=""> Historiales Clínicos</a></li>
+      <li class="info-item"><a href="{% url 'inventario_list' %}" class="quick-link"><img src="{% static 'img/icons/Inventario.png' %}" alt=""> Inventario</a></li>
+      <li class="info-item"><a href="{% url 'tienda_productos' %}" class="quick-link"><img src="{% static 'img/icons/Tienda.png' %}" alt=""> Tienda en Línea</a></li>
+      <li class="info-item"><a href="{% url 'factura_list' %}" class="quick-link"><img src="{% static 'img/icons/Facturas.png' %}" alt=""> Facturas</a></li>
+    </ul>
+  </div>
 </div>
 
 <!-- Módulos principales -->

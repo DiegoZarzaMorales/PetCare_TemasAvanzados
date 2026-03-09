@@ -33,11 +33,15 @@ from django.db.models import Q
 def index(request):
     from django.utils.timezone import now
     hoy = now().date()
+    proximas_citas = Cita.objects.filter(fecha__gte=hoy).order_by('fecha', 'hora')[:5]
     context = {
         'total_mascotas': Pacientes.objects.count(),
         'citas_hoy': Cita.objects.filter(fecha=hoy).count(),
         'total_productos': Inventario.objects.count(),
         'total_facturas': Factura.objects.count(),
+        'total_propietarios': Propietario.objects.count(),
+        'total_consultas': Datosconsulta.objects.count(),
+        'proximas_citas': proximas_citas,
     }
     return render(request, 'index.html', context)
 
